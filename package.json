@@ -1,0 +1,15 @@
+{
+  "name": "project-euler",
+  "version": "0.0.1",
+  "author": "Florian Edelmaier",
+  "description": "project euler hacking with node.js",
+  "keywords": [
+    "project euler"
+  ],
+  "dependencies" : {
+    "big.js"   :  "2.x.x"
+  },
+  "analyze": false,
+  "license": "MIT",
+  "private": "true"
+}
