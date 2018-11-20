@@ -4,7 +4,6 @@ What is the largest prime factor of the number 600851475143 ?
 */
 
 var isPrime = function(x) {
-    'use strict';
     if (!x instanceof Number) return false;
     if ( x == 1 ) { return false; }
     
@@ -17,7 +16,6 @@ var isPrime = function(x) {
 }
 
 var getFactors = function(x) {
-    'use strict';
     var result = [];
     var i = 1;
     if (!x instanceof Number) return result;
