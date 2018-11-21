@@ -5,7 +5,6 @@ Find the largest palindrome made from the product of two 3-digit numbers.
 */
 
 var getAllProducts = function(limitMin, limitMax) {
-    'use strict';
     var result = [];
     if (!limitMin instanceof Number || !limitMax instanceof Number) return result;
     var i = limitMin;
@@ -19,7 +18,6 @@ var getAllProducts = function(limitMin, limitMax) {
 }
 
 var isPalindrome = function(n) {
-    'use strict';
     if (!n instanceof Number) return false;
     var numberStr = n.toString();
     var c = 0;
@@ -30,7 +28,6 @@ var isPalindrome = function(n) {
 }
 
 var compareNumbers = function(a, b) {
-    'use strict';
     if (!a instanceof Number || !b instanceof Number) throw "Number comparator accepts only numbers.";
     return a - b;
 }
