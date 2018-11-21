@@ -5,33 +5,15 @@ Hence the difference between the sum of the squares of the first ten natural num
 Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 */
 
-var range = function(n, predicate) {
-    'use strict';
-    var i = 0;
-    var result = [];
-
-    if (!n instanceof Number) return result;
-    var predicate = predicate || function(i) { return i; };
-
-    for(i; i < n; i++) {
-      if(predicate(i)) result.push(i);
-    }
-    return result;
+const range = (n, predicate = i => i) => {
+    if(!n instanceof Number) return [];
+    return [...Array(n + 1).keys()].filter(i => predicate(i));
 }
 
-var sum = function(previous, current) {
-    'use strict';
-    if (!previous instanceof Number) previous = 0;
-    if (!current instanceof Number) current = 0;
-    return previous + current;
-}
-
-var problem6 = function(n) {
-    'use strict';
-    if (!n instanceof Number) n = 11;
-    var sumNumbersSquared = Math.pow(range(n).reduce(sum),2);
-    var sumSquaredNumbers = range(n).map(function(n) { return Math.pow(n,2); }).reduce(sum);
+const problem6 = n => {
+    const sumNumbersSquared = Math.pow(range(n).reduce((acc, num) => acc + num),2);
+    const sumSquaredNumbers = range(n).map(n => Math.pow(n,2)).reduce((acc, num) => acc + num);
     return sumNumbersSquared - sumSquaredNumbers;
 }
 
-console.log(problem6(101));
+console.log(problem6(100));
