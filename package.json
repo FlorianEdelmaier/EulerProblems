@@ -6,8 +6,8 @@
   "keywords": [
     "project euler"
   ],
-  "dependencies" : {
-    "big.js"   :  "2.x.x"
+  "dependencies": {
+    "big.js": "2.x.x"
   },
   "analyze": false,
   "license": "MIT",
