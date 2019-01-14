@@ -14,6 +14,11 @@ Which starting number, under one million, produces the longest chain?
 NOTE: Once the chain starts the terms are allowed to go above one million.
 */
 
+const range = (n, predicate = i => i) => {
+    if(!n instanceof Number) return [];
+    return [...Array(n).keys()].filter(i => predicate(i));
+}
+
 const evenCollatz = x => x/2;
 
 const oddCollatz = x => 3 * x + 1;
@@ -32,12 +37,20 @@ const getCollatzSequence = x => {
 	return result;
 }
 
-const calcCollatzForNumbersUpTo = num => {
-	for(let i = 0; i < num; i++) {
-
+const calcMaxCollatzChainForNumbersUpTo = num => {
+	let maxNum = { number: 0, chainLength: 0 };
+	range(num).forEach(n => {
+		const collatz = getCollatzSequence(n);
+		if(maxNum.chainLength < collatz.length) {
+			maxNum.number = n;
+			maxNum.chainLength = collatz.length;
+		}
+	});
+	return maxNum;
+}
 
 const problem14 = () => {
-	console.log(13, getCollatzSequence(13));
+	console.log(calcMaxCollatzChainForNumbersUpTo(999999));
 }
 
 problem14();

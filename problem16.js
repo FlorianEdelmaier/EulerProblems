@@ -6,7 +6,7 @@ What is the sum of the digits of the number 2*1000?
 
 const Big = require('big.js')
 
-const nr = new Big((2 ** 1000).toString())
+const nr = new Big(2).pow(1000);
 
-console.log(nr.c)
+//console.log(nr.c)
 console.log(nr.c.reduce((acc, val) => acc + val));
