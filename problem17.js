@@ -46,5 +46,7 @@ const number2word = n => {
     else throw Error("number not supported")
 }
 
-const words = range(350).map(n => number2word(n))
-console.log(words.slice(199,303));
+const words = range(1000)
+				.map(n => number2word(n))
+				.reduce((acc, cur) => [...acc,...cur.replace(/-/g,'').replace(/ /g,'').split('')], [])
+console.log(words.length);
