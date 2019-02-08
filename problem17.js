@@ -17,6 +17,7 @@ const tenners = ['ten', 'twenty','thirty','forty','fifty','sixty','seventy','eig
 const isOneDigitNumber = nStr => nStr.length === 1;
 const isTwoDigitNumber = nStr => nStr.length === 2;
 const isThreeDigitNumber = nStr => nStr.length === 3;
+const is1Thousand = nStr => nStr === "1000";
 
 const getSingleNumber = n => singles[n];
 const getTwoDigitNumber = nAsString => {
@@ -46,7 +47,8 @@ const number2word = n => {
     else throw Error("number not supported")
 }
 
-const words = range(1000)
+const words = range(1001)
 				.map(n => number2word(n))
 				.reduce((acc, cur) => [...acc,...cur.replace(/-/g,'').replace(/ /g,'').split('')], [])
+
 console.log(words.length);
