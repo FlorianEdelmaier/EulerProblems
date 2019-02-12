@@ -29,3 +29,46 @@ Find the maximum total from top to bottom of the triangle below:
 
 NOTE: As there are only 16384 routes, it is possible to solve this problem by trying every route. However, Problem 67, is the same challenge with a triangle containing one-hundred rows; it cannot be solved by brute force, and requires a clever method! ;o)
 */
+
+const fs = require('fs');
+const path = require('path');
+const endOfLine = require('os').EOL;
+
+const filePath = path.join(__dirname, 'problem18.txt');
+
+class BinaryNode {
+  constructor(value, leftNode = undefined, rightNode = undefined) {
+    this.value = value;
+    this.leftNode = leftNode;
+    this.rightNode = rightNode;
+  }
+}
+
+const readTxtFile = fpath => fs.readFileSync(filePath).toString();
+const parseToNodeArray = data => data.split(endOfLine).map(l => l.split(' ').map(strV => new BinaryNode(parseInt(strV))));
+const createTree = nodeArray => {
+  nodeArray.reverse().forEach((array, index) => {
+    if((nodeArray.length - index) === 0) return;
+    for(let i = 0; i < (array.length - 1); i++) {
+      nodeArray[index + 1][i].leftNode = array[i];
+      nodeArray[index + 1][i].rightNode = array[i+1];
+    }
+  })
+  return nodeArray[nodeArray.length-1][0];
+}
+
+const walkMaximumPath = tree => {
+  const result = [tree.value];
+  let node = tree;
+  while(node.leftNode || node.rightNode)  {
+    node = (node.leftNode.value > node.rightNode.value) ? node.leftNode : node.rightNode;
+    result.push(node.value);
+  }
+  return result;
+}
+
+const tree = createTree(parseToNodeArray(readTxtFile(filePath)))
+const maxPath = walkMaximumPath(tree);
+
+console.log(maxPath)
+
