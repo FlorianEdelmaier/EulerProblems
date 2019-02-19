@@ -50,28 +50,31 @@ const matrix = [
     [01, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 01, 89, 19, 67, 48]
 ]
 
-const range = (start=0, end=0, step=1) => {
-    if(start === end || step === 0) return [];
-    const length = Math.ceil(Math.abs(end - start) / step);
-    return start > end ?
-         Array.from({length}, (value, key) => start - key * step) :
-         Array.from({length}, (value, key) => start + key * step);
- }
-
-const walk = step => {
-    for(let i=0; i <= (20-step); i++) {
-        for(let j=0; j <= (20-step); j++) {
-            const sub = []
-            range(i,i+step).map(vI => {
-                sub[i] = [];
-                range(j, j+step).map(vJ => {
-                    //console.log(matrix[vI][vJ])
-                    sub[i].push(matrix[vI][vJ])
-                })
-            })
-            console.table(sub)
-        }
-    }
+const range = (start=0, stop=0) => {
+    return [...Array(stop).keys()].filter(v => v >= start);
 }
 
-walk(4)
+const product = (acc, val) => acc * val;
+
+const findMaxSum = () => {
+    const SIZE = 20;
+    let max = 0;
+    range(0, SIZE - 4 + 1).forEach(i => {
+        range(0, SIZE - 4 + 1).forEach(j => {
+            const matrixProducts = [
+                [matrix[i][j], matrix[i+1][j], matrix[i+2][j], matrix[i+3][j]].reduce(product,1),
+                [matrix[i][j+3], matrix[i+1][j+3], matrix[i+2][j+3], matrix[i+3][j+3]].reduce(product,1),
+                [matrix[i][j], matrix[i][j+1], matrix[i][j+2], matrix[i][j+3]].reduce(product,1),
+                [matrix[i+3][j], matrix[i+3][j+1], matrix[i+3][j+2], matrix[i+3][j+3]].reduce(product,1),
+                [matrix[i][j], matrix[i+1][j+1], matrix[i+2][j+2], matrix[i+3][j+3]].reduce(product,1),
+                [matrix[i][j+3], matrix[i+1][j+2], matrix[i+2][j+1], matrix[i+3][j]].reduce(product,1)
+            ];
+            const curMax = Math.max(...matrixProducts);
+            if(curMax > max) max = curMax;
+            
+        });
+    });
+    return max;
+}
+
+console.log(findMaxSum())

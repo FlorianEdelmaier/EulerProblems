@@ -42,9 +42,16 @@ class BinaryNode {
     this.leftNode = leftNode;
     this.rightNode = rightNode;
   }
+  getMaxChildNode() {
+    if(this.leftNode.value > this.rightNode.value) return this.leftNode;
+    return this.rightNode;
+  }
+  hasChildren() {
+    return this.leftNode || this.rightNode;
+  }
 }
 
-const readTxtFile = fpath => fs.readFileSync(filePath).toString();
+const readTxtFile = fpath => fs.readFileSync(fpath).toString();
 const parseToNodeArray = data => data.split(endOfLine).map(l => l.split(' ').map(strV => new BinaryNode(parseInt(strV))));
 const createTree = nodeArray => {
   nodeArray.reverse().forEach((array, index) => {
@@ -60,15 +67,12 @@ const createTree = nodeArray => {
 const walkMaximumPath = tree => {
   const result = [tree.value];
   let node = tree;
-  while(node.leftNode || node.rightNode)  {
-    node = (node.leftNode.value > node.rightNode.value) ? node.leftNode : node.rightNode;
+  while(node.hasChildren())  {
+    node = node.getMaxChildNode();
     result.push(node.value);
   }
   return result;
 }
 
 const tree = createTree(parseToNodeArray(readTxtFile(filePath)))
-const maxPath = walkMaximumPath(tree);
-
-console.log(maxPath)
-
+console.log(walkMaximumPath(tree).reduce((acc, val) => acc + val, 0));
