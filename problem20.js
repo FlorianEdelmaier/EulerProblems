@@ -13,8 +13,8 @@ const factorial = x => {
     if(x > 1) {
         x *= factorial(x - 1);
     }
-    return x;
+    return x.toFixed(0);
 }
 
-console.log(new Big(factorial(10)))
-console.log(new Big(factorial(100).toFixed(0)))
+console.log(factorial(new Big(10)))
+console.log(factorial(new Big(100)))
