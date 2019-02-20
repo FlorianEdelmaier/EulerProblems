@@ -11,10 +11,11 @@ const path = require('path');
 const filePath = path.join(__dirname, 'problem22_names.txt');
 
 const readTxtFile = fpath => fs.readFileSync(fpath).toString();
-const parseToSortedArray = data => data.split(',').map(str => str.replace(/"/g,'')).sort();
+const parseToSortedArray = data => data.split(',').map(str => str.replace(/"/g,'')).sort((a,b) => a.localeCompare(b));
 const calculateScore = arr => arr.map(name => Array.from(name)
-                                                .map(nameChar => nameChar.charCodeAt())
-                                                .reduce((acc, nr) => acc + nr, 0));
+                                                .map(nameChar => nameChar.charCodeAt() - 'A'.charCodeAt() + 1)
+                                                .reduce((acc, nr) => acc + nr, 0))
+                                                .map((v,i) => v * (i + 1));
 const calculateOverallScore = arr => arr.reduce((acc, nr) => acc + nr, 0);
 
 console.log(calculateOverallScore(calculateScore(parseToSortedArray(readTxtFile(filePath)))));
