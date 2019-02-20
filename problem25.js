@@ -34,9 +34,9 @@ function *fib(stop = i => false) {
 
 const numberOfDigitsSmallerThan1000 = nr => nr.toFixed(0).toString().split('').length <= 1000
 
-let maxFib = undefined;
+const fibs = [];
 for(let f of fib(numberOfDigitsSmallerThan1000)) {
-    maxFib = f;
+    fibs.push(f.toFixed(0));
 }
 
-console.log(maxFib.toFixed(0));
+console.log(fibs[0], fibs[1], fibs[2], fibs[3], fibs[4]);
