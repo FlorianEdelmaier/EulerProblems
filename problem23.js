@@ -21,3 +21,16 @@ function *getFactor(x) {
         }
     }
 }
+
+const isAbundantNumber = nr => {
+    const factorsOfNr = [...getFactor(nr)].filter(val => val < nr);
+    //console.log(factorsOfNr)
+    const sumOfFactorsNr = factorsOfNr.reduce((agg, val) => agg + val, 0);
+    console.log(nr, sumOfFactorsNr, nr < sumOfFactorsNr);
+    if (nr < sumOfFactorsNr) return true;
+    return false;
+}
+
+const abundantNumbers = range(300, i => i >= 12).filter(val => isAbundantNumber(val));
+
+console.log(abundantNumbers);
