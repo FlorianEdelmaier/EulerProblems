@@ -26,10 +26,10 @@ const checkAmicableNumber = nr => {
     const sumOfFactorsNr1 = factorsOfNr1.reduce((agg, val) => val < nr ? agg + val : agg, 0);
     const factorsOfNr2 = [...getFactor(sumOfFactorsNr1)]
     const sumOfFactorsNr2 = factorsOfNr2.reduce((agg, val) => val < sumOfFactorsNr1 ? agg + val : agg, 0);
-    if(nr === sumOfFactorsNr2) return { isAmicableNumber: true, nr1: nr, nr2: sumOfFactorsNr1 }
+    if(nr === sumOfFactorsNr2 && sumOfFactorsNr1 !== sumOfFactorsNr2) return { isAmicableNumber: true, nr1: nr, nr2: sumOfFactorsNr1 }
     else return { isAmicableNumber: false }
 }
 
 const getAmicableNumbersBelow = max => range(max).map(val => checkAmicableNumber(val)).filter(val => val.isAmicableNumber);
 
-console.log(getAmicableNumbersBelow(10000).reduce((acc, val) => acc + val, 0));
+console.log(getAmicableNumbersBelow(10000).reduce((acc, val) => acc + val.nr1, 0));
