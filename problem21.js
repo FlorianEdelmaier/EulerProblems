@@ -29,7 +29,7 @@ const isAmicableNumber = nr => {
     else return { isAmicableNumber: false }
 }
 
-const getAmicableNumbersBelow = max => range(max).map(val => isAmicableNumber(val));
+const getAmicableNumbersBelow = max => range(max).map(val => isAmicableNumber(val)).filter(val => val.isAmicableNumber);
 
-
+console.log(getAmicableNumbersBelow(10000))
 console.log(getAmicableNumbersBelow(10000).reduce((acc, val) => acc + val.nr1, 0));
