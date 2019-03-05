@@ -32,7 +32,7 @@ const isAbundantNumber = nr => {
 
 const abundantNumbers = range(28124, i => i >= 12).filter(val => isAbundantNumber(val));
 
-const numbersNotSumOf2AbundantNumbers = range(30);
+const numbersNotSumOf2AbundantNumbers = range(24);
 
 const isSumOf2AbundantNumbers = nr => {
     let result = false;
@@ -42,7 +42,8 @@ const isSumOf2AbundantNumbers = nr => {
     })
     return result;
 }
-range(28124, i => i >= 30).forEach(nr => {
+
+range(28124, i => i >= 24).forEach(nr => {
     if(!isSumOf2AbundantNumbers(nr)) numbersNotSumOf2AbundantNumbers.push(nr);
 })
 
