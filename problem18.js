@@ -34,45 +34,27 @@ const fs = require('fs');
 const path = require('path');
 const endOfLine = require('os').EOL;
 
-const filePath = path.join(__dirname, 'problem18.txt');
+const filePath = path.join(__dirname, 'problem67.txt');
 
-class BinaryNode {
-  constructor(value, leftNode = undefined, rightNode = undefined) {
-    this.value = value;
-    this.leftNode = leftNode;
-    this.rightNode = rightNode;
-  }
-  getMaxChildNode() {
-    if(this.leftNode.value > this.rightNode.value) return this.leftNode;
-    return this.rightNode;
-  }
-  hasChildren() {
-    return this.leftNode || this.rightNode;
-  }
-}
-
+const compose = (...fns) => data => fns.reduceRight((val, fn) => fn(val), data);
 const readTxtFile = fpath => fs.readFileSync(fpath).toString();
-const parseToNodeArray = data => data.split(endOfLine).map(l => l.split(' ').map(strV => new BinaryNode(parseInt(strV))));
-const createTree = nodeArray => {
-  nodeArray.reverse().forEach((array, index) => {
-    if((nodeArray.length - index) === 0) return;
-    for(let i = 0; i < (array.length - 1); i++) {
-      nodeArray[index + 1][i].leftNode = array[i];
-      nodeArray[index + 1][i].rightNode = array[i+1];
-    }
-  })
-  return nodeArray[nodeArray.length-1][0];
-}
-
-const walkMaximumPath = tree => {
-  const result = [tree.value];
-  let node = tree;
-  while(node.hasChildren())  {
-    node = node.getMaxChildNode();
-    result.push(node.value);
+const parseToArray = data => data.split(endOfLine).map(l => l.split(' ').map(strV => parseInt(strV)));
+const calcSumArray = (parentArray, childArray) => {
+  const result = [];
+  for(let i=0; i < childArray.length - 1; i++) {
+    [parent, left, right] = [parentArray[i], childArray[i], childArray[i+1]];
+    result[i] = Math.max(parent + left, parent + right);
   }
   return result;
 }
+const calcMaxPath = nodeArray => {
+  let tmpArray = nodeArray[nodeArray.length - 1];
+  for(let i = nodeArray.length - 1; i > 0; i--) {
+    tmpArray = calcSumArray(nodeArray[i-1], tmpArray);
+  }
+  return tmpArray[0];
+}
 
-const tree = createTree(parseToNodeArray(readTxtFile(filePath)))
-console.log(walkMaximumPath(tree).reduce((acc, val) => acc + val, 0));
+const calc = compose(calcMaxPath, parseToArray, readTxtFile);
+
+console.log(calc(filePath))

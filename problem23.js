@@ -9,7 +9,6 @@ Find the sum of all the positive integers which cannot be written as the sum of 
 
 const range = (n, predicate = i => i) => {
     if(!n instanceof Number) return [];
-    
     return [...Array(n).keys()].filter(i => predicate(i));
 }
 
@@ -23,14 +22,28 @@ function *getFactor(x) {
 }
 
 const isAbundantNumber = nr => {
-    const factorsOfNr = [...getFactor(nr)].filter(val => val < nr);
+    const factorsOfNr = new Set([...getFactor(nr)].filter(val => val < nr));
     //console.log(factorsOfNr)
-    const sumOfFactorsNr = factorsOfNr.reduce((agg, val) => agg + val, 0);
-    console.log(nr, sumOfFactorsNr, nr < sumOfFactorsNr);
+    const sumOfFactorsNr = Array.from(factorsOfNr).reduce((agg, val) => agg + val, 0);
+    //console.log(nr, sumOfFactorsNr, nr < sumOfFactorsNr, factorsOfNr);
     if (nr < sumOfFactorsNr) return true;
     return false;
 }
 
-const abundantNumbers = range(300, i => i >= 12).filter(val => isAbundantNumber(val));
+const abundantNumbers = range(28124, i => i >= 12).filter(val => isAbundantNumber(val));
 
-console.log(abundantNumbers);
+const numbersNotSumOf2AbundantNumbers = range(30);
+
+const isSumOf2AbundantNumbers = nr => {
+    let result = false;
+    const abundantNumbers2Check = new Set(abundantNumbers.filter(val => val < nr));
+    abundantNumbers2Check.forEach(val => {
+        if(abundantNumbers2Check.has(nr - val)) result = true;
+    })
+    return result;
+}
+range(28124, i => i >= 30).forEach(nr => {
+    if(!isSumOf2AbundantNumbers(nr)) numbersNotSumOf2AbundantNumbers.push(nr);
+})
+
+console.log(numbersNotSumOf2AbundantNumbers.reduce((acc, nr) => acc + nr, 0));
