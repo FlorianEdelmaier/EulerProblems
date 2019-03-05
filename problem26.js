@@ -14,3 +14,12 @@ Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle. It can be see
 
 Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
  */
+const Big = require("big.js");
+Big.DP = 100;
+Big.RM = 0;
+
+ const range = nr => [...Array(nr).keys()];
+
+const fractions = range(101).map(v => Big(1).div(Big(v)));
+
+ console.log(fractions);
