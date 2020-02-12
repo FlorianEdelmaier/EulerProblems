@@ -7,7 +7,6 @@ Find the sum of all the multiples of 3 or 5 below 1000.
 
 const range = (n, predicate = i => i) => {
     if(!n instanceof Number) return [];
-    
     return [...Array(n).keys()].filter(i => predicate(i));
 }
 
